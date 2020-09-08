@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psx.mapper.MovieMapper">
+<!--    查询全部数据-->
+    <select id="queryMovieList" resultType="Movie">
+        select * from movie_list
+    </select>
+
+    <insert id="addMovie" parameterType="Movie">
+        insert into movie_list (id,mviename,director,movietime,moviedes,moviecover,movie_stars)
+        values (#{id},#{mviename},#{director},#{movietime},#{moviedes},#{moviecover},#{movie_stars})
+    </insert>
+
+</mapper>
