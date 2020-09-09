@@ -2,6 +2,8 @@ package com.psx.mapper;
 
 
 import com.psx.pojo.Actor;
+import com.psx.pojo.Actor_Region;
+import com.psx.pojo.MovieAndType;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +25,7 @@ public interface ActorMapper {
 
     //删除
 
+
+    //添加区域
+    public void insertACtorAndRegion(Actor_Region mac);
 }

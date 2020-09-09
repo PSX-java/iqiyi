@@ -37,5 +37,11 @@
 
     <insert id="addActor" parameterType="Actor">
         insert into actor (id,name,birthday,sex,description) values (#{id},#{name},#{birthday},#{sex},#{description})
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertMovieAndType" parameterType="MovieAndType">
+        insert into actor_region (actorid,regionid) values (#{actorid},#{regionid})
     </insert>
 </mapper>

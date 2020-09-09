@@ -1,8 +1,7 @@
 package com.psx.controller;
 
-import com.psx.pojo.Actor;
+import com.psx.pojo.*;
 import com.psx.mapper.ActorMapper;
-import com.psx.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,18 @@ private ActorMapper actorMapper;
     //添加
     @GetMapping("/addActor")
     public String addActor(Actor actor){
+
         actorMapper.addActor( actor);
+        int mid =actor.getId();
+        System.out.println("id=="+mid);
+        //向电影和类型的中间表中插入记录：
+        List<Type> types =actor.getRegions();
+        for (Type c :types){
+            int cid =c.getId();
+            Actor_Region mac =new Actor_Region(mid,cid);
+            actorMapper.insertACtorAndRegion(mac);
+        }
         return  "数据已添加";
     }
+
 }
