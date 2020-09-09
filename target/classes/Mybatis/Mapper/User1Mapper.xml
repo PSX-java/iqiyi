@@ -5,5 +5,7 @@
        select username from user where username=#{username} and password=#{password}
     </select>
 
-
+    <insert id="save" parameterType="User1">
+        insert into user (id,username,password) values (#{id},#{username},#{password})
+    </insert>
 </mapper>

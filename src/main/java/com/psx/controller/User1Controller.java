@@ -5,9 +5,7 @@ import com.psx.pojo.User1;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,4 +53,12 @@ public class User1Controller {
     public String loginindex(){
         return "/login/text";
     }
+
+
+    @GetMapping("/register")
+    public String save(){
+        user1Mapper.save(new User1(4,"萧风","123456"));
+        return "数据已添加";
+    }
+
 }

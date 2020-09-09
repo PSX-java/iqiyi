@@ -13,4 +13,6 @@ public interface User1Mapper {
 
     User1 login(@Param("username") String username, @Param("password") String password) ;
 
+    int save(User1 user1);
+
 }

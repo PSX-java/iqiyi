@@ -13,4 +13,11 @@
         values (#{id},#{mviename},#{director},#{movietime},#{moviedes},#{moviecover},#{movie_stars})
     </insert>
 
+    <update id="updateMovie" parameterType="Movie">
+        update movie_list set id=#{id},mviename=#{mviename},director=#{director},movietime=#{movietime},moviedes=#{moviedes},moviecover=#{moviecover},movie_stars=#{movie_stars} where id= #{id}
+    </update>
+
+    <delete id="deleteMovie" parameterType="int">
+        delete from movie_list where id=#{id}
+    </delete>
 </mapper>
