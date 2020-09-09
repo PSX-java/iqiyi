@@ -12,7 +12,7 @@ public interface ActorMapper {
     // 查询演员列表
     public List<Actor> findAll();
 
-    // 保存的方法
+    // 添加
     public int addActor(Actor actor);
 
     // 根据id查询

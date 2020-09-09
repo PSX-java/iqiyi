@@ -14,5 +14,5 @@ public interface MovieMapper {
     Movie queryMovieByName(Movie movie);
     int addMovie(Movie movie);
     int updateMovie(Movie movie);
-    int deleteMovie(Movie movie);
+    int deleteMovie(int id);
 }
