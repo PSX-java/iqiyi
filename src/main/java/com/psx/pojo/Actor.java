@@ -18,5 +18,6 @@ public class Actor {
     private String description;
     private String pic;
     // 定于区域的属性:
+   // private String regions;
     private List<Region> regions;
 }

@@ -4,27 +4,88 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.psx.mapper.MovieMapper">
 <!--    查询全部数据-->
-    <select id="queryMovieList" resultType="Movie">
-        select * from movie_list
+<!--    <select id="queryMovieList" resultType="Movie">-->
+<!--        select * from movie-->
+<!--    </select>-->
+
+
+    <resultMap type="com.psx.pojo.Movie" id="movieMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="director" column="director" />
+        <result property="time_length" column="time_length" />
+        <result property="pub_date" column="pub_date" />
+        <result property="description" column="description" />
+        <result property="rating" column="rating" />
+        <result property="pic" column="pic" />
+
+        <collection  property="cateList"  ofType="com.psx.pojo.Type">
+            <id property="id" column="cid" />
+            <result property="catname" column="catname" />
+        </collection>
+
+        <collection  property="actors"  ofType="com.psx.pojo.Actor">
+            <id property="id" column="aid" />
+            <result property="name" column="aname" />
+            <result property="birthday" column="abirthday" />
+            <result property="sex" column="asex" />
+            <result property="description" column="adescription" />
+            <result property="pic" column="apic" />
+        </collection>
+    </resultMap>
+
+    <select id="queryMovieList" resultMap="movieMap">
+        select
+            m.*,
+            a.id aid,a.name aname,a.birthday abirthday,a.sex
+            asex,a.description adescription, a.pic apic,
+            c.id cid, c.catname catname
+        from
+            movie m
+        left join
+            movie_actor ma
+        on
+            m.id=ma.movieid
+        left join
+            actor a
+        on
+            ma.actorid=a.id
+        left join
+            movie_category mc
+        on
+            m.id=mc.movieid
+        left join
+            category c
+        on mc.categoryid=c.id
     </select>
 
+
+
     <insert id="addMovie" parameterType="Movie">
-        insert into movie_list (mviename,director,movietime,moviedes,moviecover,movie_stars)
+        insert into movie (mviename,director,movietime,moviedes,moviecover,movie_stars)
         values (#{mviename},#{director},#{movietime},#{moviedes},#{moviecover},#{movie_stars})
-    <selectKey resultType="Integer" order="AFTER" keyProperty="id">
-        SELECT LAST_INSERT_ID() AS id
-    </selectKey>
-    </insert>
-    <insert id="insertMovieAndType" parameterType="MovieAndType">
-        insert into type_list (movieid,typeid) values (#{movieid},#{typeid})
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
     </insert>
 
+    <insert id="insertMovieAndType" parameterType="MovieAndType">
+        insert into movie_type (movieid,typeid) values (#{movieid},#{typeid})
+    </insert>
+
+
+<!--    删除电影与类型的中间表中的记录-->
+    <delete id="deleteMovieAndType">
+        delete from movie_type where movieid =#{id}
+    </delete>
+
+<!--    删除电影与演员的中间表中的记录-->
 
     <update id="updateMovie" parameterType="Movie">
-        update movie_list set id=#{id},mviename=#{mviename},director=#{director},movietime=#{movietime},moviedes=#{moviedes},moviecover=#{moviecover},movie_stars=#{movie_stars} where id= #{id}
+        update movie set id=#{id},mviename=#{mviename},director=#{director},movietime=#{movietime},moviedes=#{moviedes},moviecover=#{moviecover},movie_stars=#{movie_stars} where id= #{id}
     </update>
 
     <delete id="deleteMovie" parameterType="int">
-        delete from movie_list where id=#{id}
+        delete from movie where id=#{id}
     </delete>
 </mapper>

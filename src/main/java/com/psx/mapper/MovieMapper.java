@@ -18,4 +18,10 @@ public interface MovieMapper {
     int deleteMovie(int id);
     void insertMovieAndType(MovieAndType mac);
 
+
+    Movie findById(int movieId);
+    void deleteMovieAndType(int movieid);
+
+    void deleteMovieAndActors(int movieid);
+
 }
