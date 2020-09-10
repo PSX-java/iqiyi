@@ -21,11 +21,11 @@ public interface ActorMapper {
     public Actor findById(int id);
 
     // 更新一条记录
-    public void update(Actor actor);
+    public int  updateActor(Actor actor);
 
     //删除
-
+    int deleteActor(int id);
 
     //添加区域
-    public void insertACtorAndRegion(Actor_Region mac);
+    public int insertActorAndRegion(Actor_Region mac);
 }

@@ -1,6 +1,7 @@
 package com.psx.controller;
 
 import com.psx.mapper.User1Mapper;
+import com.psx.pojo.User;
 import com.psx.pojo.User1;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,6 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+/**
+ * 注册登录页面
+ * */
+
+
 
 @RestController
 public class User1Controller {
@@ -56,8 +63,8 @@ public class User1Controller {
 
 
     @GetMapping("/register")
-    public String save(){
-        user1Mapper.save(new User1(4,"萧风","123456"));
+    public String save(User1 user1){
+        user1Mapper.save(user1);
         return "数据已添加";
     }
 

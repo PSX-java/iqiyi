@@ -24,19 +24,33 @@ private ActorMapper actorMapper;
 
     //添加
     @GetMapping("/addActor")
-    public String addActor(Actor actor){
+    public String addActor(Actor actor ){
 
         actorMapper.addActor( actor);
         int mid =actor.getId();
         System.out.println("id=="+mid);
-        //向电影和类型的中间表中插入记录：
-        List<Type> types =actor.getRegions();
-        for (Type c :types){
+        //向演员和类型的中间表中插入记录：
+        List<Region> regions =actor.getRegions();
+        for (Region c :regions){
             int cid =c.getId();
             Actor_Region mac =new Actor_Region(mid,cid);
-            actorMapper.insertACtorAndRegion(mac);
+            actorMapper.insertActorAndRegion(mac);
         }
         return  "数据已添加";
+    }
+
+    //更新
+    @GetMapping("/updateActor")
+    public String updateActor(Actor actor){
+      actorMapper.updateActor(actor);
+      return "数据已更改";
+    }
+
+    //删除
+    @GetMapping("deleteActor")
+    public String deleteActor(int id){
+        actorMapper.deleteActor(id);
+        return "ok";
     }
 
 }

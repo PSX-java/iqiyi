@@ -36,6 +36,19 @@
     </select>
 
     <insert id="addActor" parameterType="Actor">
-        insert into actor (id,name,birthday,sex,description) values (#{id},#{name},#{birthday},#{sex},#{description})
+        insert into actor (id,name,birthday,sex,description,pic) values (#{id},#{name},#{birthday},#{sex},#{description},#{pic})
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() AS id
+        </selectKey>
     </insert>
+    <insert id="insertActorAndRegion" parameterType="Actor_Region">
+        insert into actor_region (actorid,regionid) values (#{actorid},#{regionid})
+    </insert>
+
+    <update id="updateActor" parameterType="Actor">
+       update actor set id=#{id}, name =#{name},birthday = #{birthday} ,sex =#{sex} ,description = #{description} ,pic=#{pic}  where id =#{id}
+    </update>
+    <delete id="deleteActor" parameterType="int">
+        delete from actor where Actorid = #{id}
+    </delete>
 </mapper>

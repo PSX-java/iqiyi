@@ -9,9 +9,16 @@
     </select>
 
     <insert id="addMovie" parameterType="Movie">
-        insert into movie_list (id,mviename,director,movietime,moviedes,moviecover,movie_stars)
-        values (#{id},#{mviename},#{director},#{movietime},#{moviedes},#{moviecover},#{movie_stars})
+        insert into movie_list (mviename,director,movietime,moviedes,moviecover,movie_stars)
+        values (#{mviename},#{director},#{movietime},#{moviedes},#{moviecover},#{movie_stars})
+    <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+        SELECT LAST_INSERT_ID() AS id
+    </selectKey>
     </insert>
+    <insert id="insertMovieAndType" parameterType="MovieAndType">
+        insert into type_list (movieid,typeid) values (#{movieid},#{typeid})
+    </insert>
+
 
     <update id="updateMovie" parameterType="Movie">
         update movie_list set id=#{id},mviename=#{mviename},director=#{director},movietime=#{movietime},moviedes=#{moviedes},moviecover=#{moviecover},movie_stars=#{movie_stars} where id= #{id}

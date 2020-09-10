@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -19,6 +20,7 @@ public class Movie {
     private String moviecover;
     private Date release_date;
     private String movie_stars;
+    private List<Type> types;
 
     public Movie(int id, String mviename, String director, int movietime, String moviedes, String moviecover,  String movie_stars) {
         this.id = id;

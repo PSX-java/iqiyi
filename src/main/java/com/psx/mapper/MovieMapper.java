@@ -1,6 +1,7 @@
 package com.psx.mapper;
 
 import com.psx.pojo.Movie;
+import com.psx.pojo.MovieAndType;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,6 @@ public interface MovieMapper {
     int addMovie(Movie movie);
     int updateMovie(Movie movie);
     int deleteMovie(int id);
+    void insertMovieAndType(MovieAndType mac);
+
 }

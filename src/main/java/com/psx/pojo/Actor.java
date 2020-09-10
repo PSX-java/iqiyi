@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.swing.plaf.synth.Region;
 import java.util.Date;
 import java.util.List;
 
@@ -19,5 +18,5 @@ public class Actor {
     private String description;
     private String pic;
     // 定于区域的属性:
-    private List regions;
+    private List<Region> regions;
 }

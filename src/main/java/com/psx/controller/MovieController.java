@@ -3,6 +3,8 @@ package com.psx.controller;
 
 import com.psx.mapper.MovieMapper;
 import com.psx.pojo.Movie;
+import com.psx.pojo.MovieAndType;
+import com.psx.pojo.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,10 +28,19 @@ public class MovieController {
 
 //    添加电影
     @GetMapping("/addMovie")
-    public List<Movie> addMovie(Movie movie){
+    public void addMovie(Movie movie){
+        // 1.向movie表中插入一条记录
        movieMapper.addMovie(movie);
-    List<Movie> movies =movieMapper.queryMovieList();
-       return movies;
+       int mid =movie.getId();
+        System.out.println("id==" + mid);
+        // 2.向电影和类型的中间表中插入记录:
+    List<Type> types =movie.getTypes();
+    for (Type type :types){
+        int typeid =type.getId();
+        MovieAndType mac =new MovieAndType(mid,typeid);
+        movieMapper.insertMovieAndType(mac);
+    }
+
     }
 
     //修改电影
@@ -45,4 +56,6 @@ public class MovieController {
         movieMapper.deleteMovie(4);
         return "ok";
     }
+    //电影数量统计
+
 }
