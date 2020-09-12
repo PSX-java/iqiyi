@@ -3,6 +3,7 @@ package com.psx.pojo;
 
 
 public class Region {
+
     private int id;
     private String name;
 

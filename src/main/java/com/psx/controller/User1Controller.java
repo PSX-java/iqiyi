@@ -1,7 +1,6 @@
 package com.psx.controller;
 
 import com.psx.mapper.User1Mapper;
-import com.psx.pojo.User;
 import com.psx.pojo.User1;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,13 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * 注册登录页面
  * */
-
-
 
 @RestController
 public class User1Controller {

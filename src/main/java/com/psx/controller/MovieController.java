@@ -2,6 +2,7 @@ package com.psx.controller;
 
 
 import com.psx.mapper.MovieMapper;
+import com.psx.mapper.TypeMapper;
 import com.psx.pojo.Movie;
 import com.psx.pojo.MovieAndType;
 import com.psx.pojo.Type;
@@ -9,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MovieController {
     @Autowired
     private MovieMapper movieMapper;
+    @Autowired
+    private TypeMapper typeMapper;
 
     //查询全部数据
     @GetMapping("/queryMovieList")
@@ -25,6 +30,19 @@ public class MovieController {
         }
         return movieList;
     }
+
+    //编辑电影获取数据
+    @GetMapping("/editMovie")
+    public Map<String,Object> editMovie(int movieid){
+        Movie movie =movieMapper.findById(movieid);
+
+        List<Type> allType = typeMapper.findAll();
+        Map<String,Object> dataMap = new HashMap<>();
+        dataMap.put("movie",movie);
+        dataMap.put("allType",allType);
+        return dataMap;
+    }
+
 
 //    添加电影
     @GetMapping("/addMovie")
@@ -68,9 +86,14 @@ public class MovieController {
 
     //删除一条电影数据
     @GetMapping("/deleteMovie")
-    public String deleteMovie(){
-        movieMapper.deleteMovie(4);
-        return "ok";
+    public String deleteMovie(int movieid){
+        //电影与类型的中间表的记录
+       movieMapper.deleteMovieAndType(movieid);
+       //电影表中的记录
+        movieMapper.deleteMovie(movieid);
+        //电影与演员的中间表的记录
+        movieMapper.deleteMovieAndActors(movieid);
+        return "删除成功";
     }
     //电影数量统计
 

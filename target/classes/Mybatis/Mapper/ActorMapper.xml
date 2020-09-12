@@ -36,7 +36,7 @@
     </select>
 
     <insert id="addActor" parameterType="Actor">
-        insert into actor (id,name,birthday,sex,description,pic) values (#{id},#{name},#{birthday},#{sex},#{description},#{pic})
+        insert into actor (name,birthday,sex,description,pic) values (#{name},#{birthday},#{sex},#{description},#{pic})
         <selectKey resultType="Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID() AS id
         </selectKey>
@@ -50,5 +50,9 @@
     </update>
     <delete id="deleteActor" parameterType="int">
         delete from actor where Actorid = #{id}
+    </delete>
+<!--    删除演员与区域表的中间表的记录-->
+    <delete id="deleteActorAndRegions">
+        delete from actor_region where id=#{id}
     </delete>
 </mapper>

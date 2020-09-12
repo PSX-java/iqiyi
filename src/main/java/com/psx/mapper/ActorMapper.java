@@ -23,9 +23,14 @@ public interface ActorMapper {
     // 更新一条记录
     public int  updateActor(Actor actor);
 
-    //删除
+    //删除演员表
     int deleteActor(int id);
 
     //添加区域
     public int insertActorAndRegion(Actor_Region mac);
+
+    //删除演员和区域表的中间表
+    void deleteActorAndRegions(int actorid);
+
+
 }

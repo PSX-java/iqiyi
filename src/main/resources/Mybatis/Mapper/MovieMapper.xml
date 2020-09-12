@@ -11,17 +11,17 @@
 
     <resultMap type="com.psx.pojo.Movie" id="movieMap">
         <id property="id" column="id" />
-        <result property="name" column="name" />
+        <result property="mviename" column="mviename" />
         <result property="director" column="director" />
-        <result property="time_length" column="time_length" />
-        <result property="pub_date" column="pub_date" />
-        <result property="description" column="description" />
+        <result property="movietime" column="movietime" />
+        <result property="release_date" column="release_date" />
+        <result property="moviedes" column="moviedes" />
         <result property="rating" column="rating" />
-        <result property="pic" column="pic" />
+        <result property="moviecover" column="moviecover" />
 
-        <collection  property="cateList"  ofType="com.psx.pojo.Type">
-            <id property="id" column="cid" />
-            <result property="catname" column="catname" />
+        <collection  property="typeList"  ofType="com.psx.pojo.Type">
+            <id property="id" column="tid" />
+            <result property="movietype" column="movietype" />
         </collection>
 
         <collection  property="actors"  ofType="com.psx.pojo.Actor">
@@ -34,12 +34,10 @@
         </collection>
     </resultMap>
 
-    <select id="queryMovieList" resultMap="movieMap">
-        select
-            m.*,
-            a.id aid,a.name aname,a.birthday abirthday,a.sex
+    <select id="findById" resultMap="movieMap">
+        select m.*,a.id aid,a.name aname,a.birthday abirthday,a.sex
             asex,a.description adescription, a.pic apic,
-            c.id cid, c.catname catname
+            t.id tid,t.movietype tmovietype
         from
             movie m
         left join
@@ -51,12 +49,38 @@
         on
             ma.actorid=a.id
         left join
-            movie_category mc
+            movie_type mc
         on
             m.id=mc.movieid
         left join
-            category c
-        on mc.categoryid=c.id
+            type t
+        on mc.typeid=t.id
+        where m.id = #{id}
+    </select>
+
+    <select id="queryMovieList" resultMap="movieMap">
+        select
+            m.*,
+            a.id aid,a.name aname,a.birthday abirthday,a.sex
+            asex,a.description adescription, a.pic apic,
+            t.id tid, t.movietype movietype
+        from
+            movie m
+        left join
+            movie_actor ma
+        on
+            m.id=ma.movieid
+        left join
+            actor a
+        on
+            ma.actorid=a.id
+        left join
+            movie_type mc
+        on
+            m.id=mc.movieid
+        left join
+            type t
+        on mc.typeid=t.id
     </select>
 
 
@@ -79,13 +103,21 @@
         delete from movie_type where movieid =#{id}
     </delete>
 
-<!--    删除电影与演员的中间表中的记录-->
-
-    <update id="updateMovie" parameterType="Movie">
-        update movie set id=#{id},mviename=#{mviename},director=#{director},movietime=#{movietime},moviedes=#{moviedes},moviecover=#{moviecover},movie_stars=#{movie_stars} where id= #{id}
-    </update>
-
+    <!--    删除电影中的记录-->
     <delete id="deleteMovie" parameterType="int">
         delete from movie where id=#{id}
     </delete>
+<!--    删除电影与演员的中间表中的记录-->
+    <delete id="deleteMovieAndActors" >
+        delete from movie_actor where movieid = #{id}
+    </delete>
+
+
+<!--    修改电影-->
+    <update id="updateMovie" parameterType="Movie">
+        update movie set mviename=#{mviename},director=#{director},movietime=#{movietime},moviedes=#{moviedes},moviecover=#{moviecover},movie_stars=#{movie_stars} where id= #{id}
+    </update>
+
+
+
 </mapper>
